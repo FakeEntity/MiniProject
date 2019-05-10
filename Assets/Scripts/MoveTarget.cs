@@ -6,6 +6,7 @@ public class MoveTarget : MonoBehaviour
 {
     PlayerMove m_playermove;
     public GameObject player;
+    public bool win=false;
 
     void Awake()
     {
@@ -15,6 +16,6 @@ public class MoveTarget : MonoBehaviour
 
     void OnMouseDown()
     {      
-            m_playermove.Move(this.transform);
+            m_playermove.Move(transform,win);
     }
 }

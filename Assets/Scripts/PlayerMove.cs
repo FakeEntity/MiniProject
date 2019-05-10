@@ -5,17 +5,26 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     float moveposx;
+    public string collisionTag="Walls";
     float moveposz;
     float dist;
+    float distb;
     public float speed = 3.0f;
     bool move = false;
     bool rayhit = true;
     Rigidbody rb;
     Vector3 dir;
     Vector3 pos;
+    Vector3 posb;
+    public LayerMask raylayer;
     public GameObject playerRays;
     public GameObject playerRayLeft;
     public GameObject playerRayRight;
+    bool phys;
+    bool physb;
+    bool win;
+
+
 
     void Awake()
     {
@@ -32,67 +41,74 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        pos.Set(moveposx, 0.25f, moveposz);
-        dist = Vector3.Distance(pos, rb.transform.position);
+        
         if (rayhit==false)
         {
-            pos.Set(moveposx, 0.25f, moveposz);
-            dist = Vector3.Distance(pos, rb.transform.position);
+            posb.Set(moveposx, 0.1f, moveposz);
+            distb = Vector3.Distance(pos, rb.transform.position);
             rb.velocity = dir * speed;
-            if (Mathf.Abs(dist) <= 0.2)
+            if (Mathf.Abs(distb) <= 0.2)
             {
                 if (move)
                 {
                     dir.Set(0, 0.25f, 0);
                     rb.velocity = dir * 0;
                     move = false;
+                    if (win == true)
+                         ManagerScript.Instance.win= true;
                 }
             }
         }
 
     }
-    public void Move(Transform tran)
+    public void Move(Transform tran,bool Win)
     {
         if (!move)
-        {
+        {       
             moveposx = tran.position.x;
             moveposz = tran.position.z;
-            dir.Set(moveposx - rb.transform.position.x, 0.25f, moveposz - rb.transform.position.z);
+            dir.Set(moveposx - rb.transform.position.x, 0.1f, moveposz - rb.transform.position.z);
+            pos.Set(moveposx, 0.1f, moveposz);
+            dist = Vector3.Distance(pos, rb.transform.position);
             playerRays.transform.rotation = Quaternion.LookRotation(dir);
-            Ray ray1 = new Ray(playerRayLeft.transform.position, dir);
+            Ray ray;          
+            ray = new Ray(playerRayLeft.transform.position, dir); //first ray check
             RaycastHit raycastHit;
-            Ray ray2 = new Ray(playerRayRight.transform.position, dir);
+            if (Physics.Raycast(ray, out raycastHit, dist,raylayer))
+                phys = true;
+            else
+                phys = false;
+            ray = new Ray(playerRayRight.transform.position, dir); //second ray check
+            if (Physics.Raycast(ray, out raycastHit, dist, raylayer))
+                    physb = true;
+                else
+                    physb = false;
+
+
+            Debug.Log("Phys: " + phys);
+            Debug.Log("Physb: " + physb);
+            Debug.Log("Dist: " + dist);
             Debug.DrawRay(playerRayLeft.transform.position, dir, Color.black, 3.0f);
             Debug.DrawRay(playerRayRight.transform.position, dir, Color.black, 3.0f);
-            if (Physics.Raycast(ray1, out raycastHit) && Physics.Raycast(ray2, out raycastHit))
+
+
+            if ((phys == true) || (physb == true)) //combining ray collision results
             {
-                if (raycastHit.transform.tag == "Walls")
-                {
-                    rayhit = true;
-                    Debug.Log(rayhit);
-                }
-                else
-                {
-                    rayhit = false;
-                    Debug.Log(rayhit);
-                    move = true;
-                }
-
-
-
-                Debug.Log(rb.velocity);
+                rayhit = true;
+                Debug.Log(rayhit);
             }
-        }
-    }
-    void OnCollisionEnter(Collision other)
-        {
-            if (other.collider.tag == "Enemy")
+            else
             {
-                Destroy(gameObject);
+                rayhit = false;
+                Debug.Log("Rayhit: "+rayhit);
+                win = Win;
+                move = true;
             }
+        }  
+     }
+    
 
-        }
-    }
+ }
     
 
 
