@@ -48,11 +48,11 @@ public class GameScript : MonoBehaviour
             image.alpha = timer / duration;
         if (timer > duration + wait)
         {
+            timer = 0;
             ManagerScript.Instance.win = false;
+            ManagerScript.Instance.currentScene = NextScene;
             SceneManager.LoadSceneAsync(NextScene);
             SceneManager.UnloadSceneAsync(currentScene);
-            ManagerScript.Instance.currentScene += 1;
-
         }
     }
         void Update()

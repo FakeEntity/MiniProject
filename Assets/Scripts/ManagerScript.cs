@@ -10,6 +10,7 @@ public class ManagerScript : MonoBehaviour
     [HideInInspector] public bool win = false;
     public int currentScene = 0;
     bool keypressR;
+    bool keypressEsc;
 
     private void Awake()
     {
@@ -31,6 +32,17 @@ public class ManagerScript : MonoBehaviour
         {
                 win = false;
                 SceneManager.LoadSceneAsync(currentScene);
+        }
+
+        keypressEsc = Input.GetKeyDown(KeyCode.Escape);
+        if (Input.touchCount==3)
+        {
+            Application.Quit();
+        }
+        if (Input.touchCount == 2)
+        {
+            win = false;
+            SceneManager.LoadSceneAsync(currentScene);
         }
     }
 }

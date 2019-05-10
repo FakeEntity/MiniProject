@@ -249,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 186477810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1.5}
+  m_LocalScale: {x: 1.0672, y: 1, z: 1.5367501}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
@@ -544,13 +544,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672304837}
-  m_LocalRotation: {x: 0.31623232, y: -0.63245326, z: 0.31653026, w: 0.6323042}
-  m_LocalPosition: {x: 7.5, y: 8.9, z: -0.3}
+  m_LocalRotation: {x: 0.7051235, y: 0.0014421223, z: -0.00031587525, w: 0.7090831}
+  m_LocalPosition: {x: -0.09, y: 18.15, z: 0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 53.158, y: -90.00001, z: 0.027}
+  m_LocalEulerAnglesHint: {x: 89.66701, y: 15.949, z: 15.806001}
 --- !u!4 &779299094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3291092567917401879, guid: 18c2e626e71f4d843a4276ca5fc854da,
@@ -636,7 +636,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.61
@@ -1910,6 +1910,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ReceiveShadows
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1494871595606931260, guid: ac8e9dd9aa42e2e479abba84f5ff136c,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac8e9dd9aa42e2e479abba84f5ff136c, type: 3}
