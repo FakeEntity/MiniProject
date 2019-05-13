@@ -35,14 +35,22 @@ public class ManagerScript : MonoBehaviour
         }
 
         keypressEsc = Input.GetKeyDown(KeyCode.Escape);
+        if (keypressEsc)
+        {
+            Application.Quit();
+        }
         if (Input.touchCount==3)
         {
             Application.Quit();
         }
         if (Input.touchCount == 2)
         {
-            win = false;
-            SceneManager.LoadSceneAsync(currentScene);
+            restartscene();
         }
+    }
+    public void restartscene()
+    {
+        win = false;
+        SceneManager.LoadSceneAsync(currentScene);
     }
 }

@@ -17,6 +17,8 @@ public class GameScript : MonoBehaviour
     public bool win = false;
     int currentScene;
 
+
+
     private void Awake()
     {
         currentScene = ManagerScript.Instance.currentScene;

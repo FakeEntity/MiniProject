@@ -20,15 +20,18 @@ public class PlayerMove : MonoBehaviour
     public GameObject playerRays;
     public GameObject playerRayLeft;
     public GameObject playerRayRight;
+    public GameObject gameMain;
     bool phys;
     bool physb;
     bool win;
+    Touches touches;
 
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        touches = gameMain.GetComponent<Touches>();
     }
     private void Start()
     {
@@ -54,6 +57,8 @@ public class PlayerMove : MonoBehaviour
                     dir.Set(0, 0.25f, 0);
                     rb.velocity = dir * 0;
                     move = false;
+                    if (touches!=null)
+                        touches.swap(true);
                     if (win == true)
                          ManagerScript.Instance.win= true;
                 }
@@ -61,12 +66,12 @@ public class PlayerMove : MonoBehaviour
         }
 
     }
-    public void Move(Transform tran,bool Win)
+    public void Move(Vector3 tran,bool Win)
     {
         if (!move)
         {       
-            moveposx = tran.position.x;
-            moveposz = tran.position.z;
+            moveposx = tran.x;
+            moveposz = tran.z;
             dir.Set(moveposx - rb.transform.position.x, 0.1f, moveposz - rb.transform.position.z);
             pos.Set(moveposx, 0.1f, moveposz);
             dist = Vector3.Distance(pos, rb.transform.position);
@@ -103,6 +108,8 @@ public class PlayerMove : MonoBehaviour
                 Debug.Log("Rayhit: "+rayhit);
                 win = Win;
                 move = true;
+                if (touches != null)
+                    touches.swap(false);
             }
         }  
      }
