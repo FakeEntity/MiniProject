@@ -9,6 +9,7 @@ public class ManagerScript : MonoBehaviour
 
     [HideInInspector] public bool win = false;
     public int currentScene = 0;
+    public bool touch = true;
     bool keypressR;
     bool keypressEsc;
 
@@ -39,18 +40,14 @@ public class ManagerScript : MonoBehaviour
         {
             Application.Quit();
         }
-        if (Input.touchCount==3)
-        {
-            Application.Quit();
-        }
-        if (Input.touchCount == 2)
-        {
-            restartscene();
-        }
     }
-    public void restartscene()
+    public void RestartScene()
     {
         win = false;
         SceneManager.LoadSceneAsync(currentScene);
+    }
+    public void QuitGame()
+    {
+        Application.Quit(); 
     }
 }

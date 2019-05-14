@@ -7,130 +7,144 @@ public class Touches : MonoBehaviour
 {
     public GameObject player;
     public GameObject playerCol;
-    public GameObject restartButton;
-    public GameObject quitButton;
+    public LayerMask moveLayer;
+    Camera cam;
     public string MoveTargetTag = "MoveTarget";
     string colName;
-    Vector2 swapStart;
-    Vector2 swapDelta;
-    Vector2 swapEnd;
-    Vector2 pos;
+    [HideInInspector] public Vector3 swipeStart;
+    Vector3 swipeDelta;
+    Vector3 swipeEnd;
+    Vector3 pos;
     Vector3 movepos;
     PlayerMove m_playermove;
     float dist;
-    bool isPlayer = false;
-    bool isRestart = false;
-    bool isQuit = false;
+    [HideInInspector] public bool isPlayer = false;
     bool foundTarget = false;
     bool win=false;
-    bool canswap = true;
+    [HideInInspector] public bool canswipe = true;
+    bool touch = false;
+    bool isTouch = false;
     public float deadzone=50.0f;
     float closestX, closestZ;
+    public GameObject ignoreObj = null;
+    [HideInInspector] public GameObject ignoreObjprev = null;
+    public bool findnewignore = false;
 
     void Awake()
     {
-        PlayerMove m_playermove = player.GetComponent<PlayerMove>();
+        m_playermove = player.GetComponent<PlayerMove>();
     }
 
     void Start()
     {
+        cam = Camera.main;
         colName = playerCol.name;
     }
 
     void Update()
     {
-        if (canswap)
+        if (canswipe)
         {
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
+            //if (Input.GetTouch(0).phase == TouchPhase.Ended || (Input.GetTouch(0).phase == TouchPhase.Canceled))
+            //{ isTouch = false; }
+            if (Input.GetMouseButtonUp(0))
             {
+                isTouch = false;
+                Debug.Log("IsTouch: " + isTouch);
+            }
+            if (Input.GetMouseButtonDown(0))
+            {
+                isTouch = true;
+                touch = true;
+                Debug.Log("IsTouch: " + isTouch);
+            }
+                  //Vector3 mousePositionOnScreen = Input.mousePosition;
+                //Vector3 mousePositionInWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-                swapStart = Input.GetTouch(0).position;
-                Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit raycastHit;
-                if (Physics.Raycast(raycast, out raycastHit))
+            if (touch)
+            {
+                if (isTouch==false)
                 {
-                    if (raycastHit.collider.name == colName)
+                    if (isPlayer)
                     {
-                        isPlayer = true;
+                        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                        RaycastHit raycasthit;
+                        if (Physics.Raycast(ray, out raycasthit, Mathf.Infinity, moveLayer))
+                        {
+                            swipeEnd.Set(raycasthit.point.x,0.25f, raycasthit.point.z);
+                        }
+                        //swapEnd = Input.touches[0].position;
+                        //swipeEnd.Set (Camera.main.ScreenToWorldPoint(hhh));
+                        Debug.Log("mouseposx: " + Input.mousePosition.x);
+                        Debug.Log("mouseposy: " + Input.mousePosition.y);
+                        swipeDelta = swipeEnd - swipeStart;
+                        Debug.Log("SwipeStart: " + swipeStart);
+                        Debug.Log("SwipeEnd: " + swipeEnd);
+                        Debug.Log("Delta: " + swipeDelta);
+                        Debug.Log("SwipeDelta: " + swipeDelta.magnitude);
                     }
-                    else
-                    {
-                        isPlayer = false;
-                    }
-                    if (raycastHit.collider.gameObject == restartButton)
-                    {
-                        isRestart = true;
-                    }
-                    if (raycastHit.collider.gameObject == quitButton)
-                    {
-                        isQuit = true;
-                    }
+                    touch = false;
                 }
             }
-            else if (Input.GetTouch(0).phase == TouchPhase.Ended || (Input.GetTouch(0).phase == TouchPhase.Canceled))
-            {
-                if (isPlayer)
-                {
-                    swapEnd = Input.GetTouch(0).position;
-                    swapDelta = swapEnd - swapStart;
-                }
 
-                Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                RaycastHit raycastHit;
-                if (Physics.Raycast(raycast, out raycastHit))
-                {
-                    if ((isQuit) && (raycastHit.collider.gameObject == quitButton))
-                    {
-                        Application.Quit();
-                    }
-                    if ((isRestart) && (raycastHit.collider.gameObject == restartButton))
-                    {
-                        ManagerScript.Instance.restartscene();
-                    }
-                }
-                
-            }
-
-            if (isPlayer && swapDelta.magnitude > deadzone)
+            if (isPlayer && swipeDelta.magnitude > deadzone)
             {
                 Ray raycast;
-                raycast = new Ray(swapStart, swapEnd);
-                Debug.DrawRay(swapStart, swapEnd, Color.black, 2.0f);
+                raycast = new Ray(swipeStart, swipeDelta);
+                Debug.DrawRay(swipeStart, swipeDelta, Color.black, 2.0f);
                 RaycastHit[] Hits;
                 bool firstCheck = true;
-                Hits = Physics.RaycastAll(raycast, swapDelta.magnitude);
+                Hits = Physics.RaycastAll(raycast, 50.0f);
                 for (int i = 0; i < Hits.Length; i++)
                 {
-                    if (Hits[i].transform.tag == MoveTargetTag)
+                    if (Hits[i].collider.transform.tag == MoveTargetTag)
                     {
-                        if (firstCheck)
+                        MoveTarget mov = Hits[i].collider.GetComponent<MoveTarget>();
+                        if (!mov.ignore)
                         {
-                            MoveTarget m_movetarget = Hits[i].collider.GetComponent<MoveTarget>();
-                            win = m_movetarget.win;
-                            closestX = Hits[i].transform.position.x;
-                            closestZ = Hits[i].transform.position.z;
-                            pos.Set(Hits[i].transform.position.x, Hits[i].transform.position.z);
-                            dist = Vector2.Distance(swapStart, pos);
-                            firstCheck = false;
-                            foundTarget = true;
-                        }
-                        else
-                        {
-                            pos.Set(Hits[i].transform.position.x, Hits[i].transform.position.z);
-                            if (Vector2.Distance(swapStart, pos) < dist)
+                            if (firstCheck)
                             {
                                 MoveTarget m_movetarget = Hits[i].collider.GetComponent<MoveTarget>();
                                 win = m_movetarget.win;
-                                closestX = Hits[i].transform.position.x;
-                                closestZ = Hits[i].transform.position.z;
+                                closestX = Hits[i].collider.transform.position.x;
+                                closestZ = Hits[i].collider.transform.position.z;
+                                if (!findnewignore)
+                                {
+                                    ignoreObj = Hits[i].collider.gameObject;
+                                }
+                                else
+                                {
+                                    ignoreObjprev = ignoreObj;
+                                    ignoreObj = Hits[i].collider.gameObject;
+                                }
+                                pos.Set(Hits[i].collider.transform.position.x, 0.25f, Hits[i].collider.transform.position.z);
+                                dist = Vector2.Distance(swipeStart, pos);
+                                firstCheck = false;
+                                foundTarget = true;
+                                Debug.Log("FoundTarget");
+                            }
+                            else
+                            {
+                                pos.Set(Hits[i].transform.position.x, 0.25f, Hits[i].transform.position.z);
+                                if (Vector2.Distance(swipeStart, pos) < dist)
+                                {
+                                    ignoreObj = Hits[i].collider.gameObject;
+                                    MoveTarget m_movetarget = Hits[i].collider.GetComponent<MoveTarget>();
+                                    win = m_movetarget.win;
+                                    closestX = Hits[i].transform.position.x;
+                                    closestZ = Hits[i].transform.position.z;
+                                }
                             }
                         }
+
                     }
                 }
+
                 if (foundTarget)
                 {
                     movepos.Set(closestX, 0.25f, closestZ);
                     m_playermove.Move(movepos, win);
+                    Debug.Log("Go");
                 }
                 Reset();
             }
@@ -138,10 +152,11 @@ public class Touches : MonoBehaviour
     }
     public void swap(bool cswap)
     {
-        canswap=cswap;
+        canswipe=cswap;
     }
     private void Reset()
     {
-        foundTarget = isPlayer = isRestart = win = false;
+        foundTarget = isPlayer = win = false;
+        swipeStart = swipeEnd= swipeDelta = Vector3.zero;
     }
 }

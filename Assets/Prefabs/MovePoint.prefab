@@ -92,8 +92,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6823712, y: 0.6830779, z: 0.9750447}
-  m_Center: {x: -0.008571218, y: 0.019780045, z: -0.3875224}
+  m_Size: {x: 1.0326717, y: 1.0280883, z: 0.9750447}
+  m_Center: {x: 0.0045115454, y: -0.0020692276, z: -0.3875224}
 --- !u!114 &5598399382120760950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,3 +108,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   win: 0
+  ignore: 0

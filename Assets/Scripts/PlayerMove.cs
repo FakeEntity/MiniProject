@@ -25,6 +25,7 @@ public class PlayerMove : MonoBehaviour
     bool physb;
     bool win;
     Touches touches;
+    public bool findnewignore = false;
 
 
 
@@ -35,7 +36,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void Start()
     {
-
+        Debug.Log("canswipe: " + touches.canswipe);
         moveposx = 0.0f;
         moveposz = 0.0f;
         pos.Set(moveposx, 0.25f, moveposz);
@@ -57,8 +58,11 @@ public class PlayerMove : MonoBehaviour
                     dir.Set(0, 0.25f, 0);
                     rb.velocity = dir * 0;
                     move = false;
-                    if (touches!=null)
+                    if (touches != null)
+                    {
                         touches.swap(true);
+                        Debug.Log("canswipe: " + touches.canswipe);
+                    }
                     if (win == true)
                          ManagerScript.Instance.win= true;
                 }
@@ -107,15 +111,39 @@ public class PlayerMove : MonoBehaviour
                 rayhit = false;
                 Debug.Log("Rayhit: "+rayhit);
                 win = Win;
+                if (findnewignore)
+                {
+                    MoveTarget ignorePrev = touches.ignoreObjprev.GetComponent<MoveTarget>();
+                    ignorePrev.ignore = false;
+                }
+                MoveTarget ignore = touches.ignoreObj.GetComponent<MoveTarget>();
+                ignore.ignore=true;
+                findnewignore = true;
+                touches.findnewignore = true;
                 move = true;
                 if (touches != null)
+                {
                     touches.swap(false);
+                }
             }
         }  
      }
-    
+    private void OnMouseDown()
+    {
+        Debug.Log("canswipe: " + touches.canswipe);
 
- }
+        if (touches.canswipe)
+        {
+            touches.isPlayer = true;
+            Debug.Log("IsPlayer: " + touches.isPlayer);
+            touches.swipeStart.Set(rb.transform.position.x, 0.25f, rb.transform.position.z);
+        }
+
+    }
+
+
+
+}
     
 
 

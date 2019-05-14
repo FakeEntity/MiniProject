@@ -21,13 +21,16 @@ public class GameScript : MonoBehaviour
 
     private void Awake()
     {
-        currentScene = ManagerScript.Instance.currentScene;
         timer = fadeOutDuration;
         if (skipFadeOut)
         {
             state = true;
             Imager.alpha = 0;
         }
+    }
+    private void Start()
+    {
+        currentScene = ManagerScript.Instance.currentScene;
     }
 
     public void FadeOut(CanvasGroup image,float duration)
@@ -59,15 +62,21 @@ public class GameScript : MonoBehaviour
     }
         void Update()
         {
-        Debug.Log("CurrentScene: "+currentScene);
 
         if (!state)
             FadeOut(Imager, fadeOutDuration);
-        Debug.Log(timer);
         if (ManagerScript.Instance.win==true)
         {
             End(Imager, fadeInDuration,waitBeforeEnd);
         }
+    }
+    public void RestartScene()
+    {
+        ManagerScript.Instance.RestartScene();
+    }
+    public void QuitGame()
+    {
+        ManagerScript.Instance.QuitGame();
     }
 }
 
