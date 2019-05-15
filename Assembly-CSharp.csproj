@@ -70,7 +70,8 @@
     <Compile Include="Assets\Scripts\NpcMove.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Rotate.cs" />
-    <Compile Include="Assets\Scripts\Touches.cs" />
+    <Compile Include="Assets\Scripts\Swipe.cs" />
+    <Compile Include="Assets\Scripts\Test\Touches.cs" />
     <Compile Include="Assets\Scripts\Unselect.cs" />
     <Compile Include="Assets\Scripts\WriteScene.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />

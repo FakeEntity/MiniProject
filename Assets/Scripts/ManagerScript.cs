@@ -9,7 +9,7 @@ public class ManagerScript : MonoBehaviour
 
     [HideInInspector] public bool win = false;
     public int currentScene = 0;
-    public bool touch = true;
+    public bool mouse = true;
     bool keypressR;
     bool keypressEsc;
 

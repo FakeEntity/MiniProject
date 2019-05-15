@@ -33,9 +33,9 @@ public class MoveTarget : MonoBehaviour
         }
     }
 
-    void OnMouseDown()
-    {      
-        if (!ManagerScript.Instance.touch)
-            m_playermove.Move(pos,win);
-    }
+    //void OnMouseDown()
+    //{      
+    //    if (!ManagerScript.Instance.mouse)
+    //        m_playermove.Move(pos,win);
+    //}
 }

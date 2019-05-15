@@ -62,10 +62,10 @@ public class GameScript : MonoBehaviour
     }
         void Update()
         {
-
+        win = ManagerScript.Instance.win;
         if (!state)
             FadeOut(Imager, fadeOutDuration);
-        if (ManagerScript.Instance.win==true)
+        if (win==true)
         {
             End(Imager, fadeInDuration,waitBeforeEnd);
         }

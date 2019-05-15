@@ -960,7 +960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   win: 0
   currentScene: 0
-  touch: 1
+  mouse: 1
 --- !u!4 &915364021
 Transform:
   m_ObjectHideFlags: 0
@@ -1862,7 +1862,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1623203761}
   - component: {fileID: 1623203762}
-  - component: {fileID: 1623203763}
+  - component: {fileID: 1623203764}
   m_Layer: 0
   m_Name: GameMain
   m_TagString: Untagged
@@ -1904,7 +1904,7 @@ MonoBehaviour:
   player: {fileID: 519145712}
   NextScene: 1
   win: 0
---- !u!114 &1623203763
+--- !u!114 &1623203764
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1913,22 +1913,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1623203760}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa28d758316127642adc84eadf288444, type: 3}
+  m_Script: {fileID: 11500000, guid: ab05455eb3dc2c74bbb45e13df1f1eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 519145712}
-  playerCol: {fileID: 0}
-  moveLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  deadzone: 1
+  win: 0
   MoveTargetTag: MoveTarget
-  swipeStart: {x: 0, y: 0, z: 0}
-  isPlayer: 0
-  canswipe: 1
-  deadzone: 3
   ignoreObj: {fileID: 0}
   ignoreObjprev: {fileID: 0}
   findnewignore: 0
+  canswipe: 1
 --- !u!1 &1751501483
 GameObject:
   m_ObjectHideFlags: 0

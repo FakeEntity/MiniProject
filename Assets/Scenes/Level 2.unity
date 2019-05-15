@@ -251,6 +251,7 @@ GameObject:
   - component: {fileID: 61129263}
   - component: {fileID: 61129262}
   - component: {fileID: 61129264}
+  - component: {fileID: 61129265}
   m_Layer: 0
   m_Name: GameMain
   m_TagString: Untagged
@@ -299,13 +300,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61129261}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa28d758316127642adc84eadf288444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 144491952}
-  playerCol: {fileID: 144491953}
+  playerCol: {fileID: 0}
   moveLayer:
     serializedVersion: 2
     m_Bits: 512
@@ -317,6 +318,26 @@ MonoBehaviour:
   ignoreObj: {fileID: 56532487}
   ignoreObjprev: {fileID: 0}
   findnewignore: 1
+--- !u!114 &61129265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61129261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab05455eb3dc2c74bbb45e13df1f1eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 144491952}
+  deadzone: 125
+  win: 0
+  MoveTargetTag: MoveTarget
+  ignoreObj: {fileID: 56532487}
+  ignoreObjprev: {fileID: 0}
+  findnewignore: 1
+  canswipe: 0
 --- !u!1 &88048698
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +585,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5370255512918017722, guid: 130a1bc5bd84ec44eb3ff567504ff690,
+        type: 3}
+      propertyPath: gameMain
+      value: 
+      objectReference: {fileID: 61129261}
     - target: {fileID: 1380453835590017618, guid: 130a1bc5bd84ec44eb3ff567504ff690,
         type: 3}
       propertyPath: m_Size.y
@@ -574,22 +600,11 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 0.4
       objectReference: {fileID: 0}
-    - target: {fileID: 5370255512918017722, guid: 130a1bc5bd84ec44eb3ff567504ff690,
-        type: 3}
-      propertyPath: gameMain
-      value: 
-      objectReference: {fileID: 61129261}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 130a1bc5bd84ec44eb3ff567504ff690, type: 3}
 --- !u!1 &144491952 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1380453837093035078, guid: 130a1bc5bd84ec44eb3ff567504ff690,
-    type: 3}
-  m_PrefabInstance: {fileID: 144491951}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &144491953 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7621787529966749884, guid: 130a1bc5bd84ec44eb3ff567504ff690,
     type: 3}
   m_PrefabInstance: {fileID: 144491951}
   m_PrefabAsset: {fileID: 0}
