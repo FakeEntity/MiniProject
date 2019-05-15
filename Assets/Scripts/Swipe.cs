@@ -5,14 +5,14 @@ using UnityEngine;
 public class Swipe : MonoBehaviour
 {
     public GameObject player;
+    public LayerMask moveLayer;
     Rigidbody playerbody;
-    public float deadzone=125.0f;
+    public float deadzone = 125.0f;
     private bool tap;
     bool isDragging = false;
-    Vector2 startTouch, swipeDelta;
-    Vector3 swipeDeltav3;
+    [HideInInspector] public Vector3 startTouch, swipeDelta, currentTouch;
     [HideInInspector] public bool win;
-    bool firstCheck;
+    [HideInInspector] public bool firstCheck = false;
     public string MoveTargetTag = "MoveTarget";
     bool mouse;
     float closestX;
@@ -20,16 +20,18 @@ public class Swipe : MonoBehaviour
     #region Start Inside MoveTarget
     public GameObject ignoreObj = null;
     [HideInInspector] public GameObject ignoreObjprev = null;
-    public bool findnewignore = false;
     #endregion
-    Vector3 playerpos;
+    [HideInInspector] public Vector3 playerpos;
     Vector3 pos;
     Vector3 movepos;
     float dist;
     bool foundTarget;
     bool isMouseheld = false;
-    [HideInInspector] public bool canswipe=true;
+    public bool canswipe=true;
+    //bool atTarget;
     PlayerMove playermove;
+    Ray ray;
+    RaycastHit raycasthit;
 
     private void Awake()
     {
@@ -38,12 +40,16 @@ public class Swipe : MonoBehaviour
     }
     private void Start()
     {
+        //atTarget = playermove.atTarget;
         mouse=ManagerScript.Instance.mouse;
     }
 
     private void Update()
     {
-        playerpos.Set (playerbody.transform.position.x,0.25f, playerbody.transform.position.z);
+        if (player != null)
+        {
+            playerpos.Set(playerbody.transform.position.x, 0.25f, playerbody.transform.position.z);
+        }
         tap=false;
 
         #region Mouse Inputs
@@ -62,7 +68,11 @@ public class Swipe : MonoBehaviour
             tap = true;
             Debug.Log("Tap: " + tap);
             isDragging = true;
-            startTouch = Input.mousePosition;
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out raycasthit, Mathf.Infinity, moveLayer))
+            {
+                startTouch.Set(raycasthit.point.x, 0.25f, raycasthit.point.z);
+            }
         }
         else if (Input.GetMouseButtonUp(0) && mouse)
         {
@@ -73,11 +83,15 @@ public class Swipe : MonoBehaviour
         #region Touch Inputs
         if (Input.touches.Length != 0 && !mouse)
         {
-            if (Input.touches[0].phase==TouchPhase.Began)
+            if (Input.touches[0].phase==TouchPhase.Began && canswipe)
             {
                 tap=true;
                 isDragging = true;
-                startTouch = Input.touches[0].position;
+                ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
+                if (Physics.Raycast(ray, out raycasthit, Mathf.Infinity, moveLayer))
+                {
+                    startTouch.Set(raycasthit.point.x, 0.25f, raycasthit.point.z);
+                }
             }
             else if ((Input.touches[0].phase==TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled) && !mouse)
             {
@@ -87,33 +101,40 @@ public class Swipe : MonoBehaviour
         #endregion
         Debug.Log("isDragging: " + isDragging);
         Debug.Log("canSwipe: " + canswipe);
-        if (isDragging && canswipe)
+        if (isDragging)
         {
             if (Input.touches.Length > 0 && !mouse)
             {
                 Debug.Log("test");
-                swipeDelta = Input.touches[0].position - startTouch;
-                swipeDeltav3 = (Vector3)swipeDelta;
-                Debug.Log("swipeDeltav3: " + swipeDeltav3.x + swipeDeltav3.y + swipeDeltav3.z);
-                Debug.DrawRay((Vector3)startTouch, swipeDelta);
+                ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
+                if (Physics.Raycast(ray, out raycasthit, Mathf.Infinity, moveLayer))
+                {
+                    currentTouch.Set(raycasthit.point.x, 0.25f, raycasthit.point.z);
+                }
+                swipeDelta = currentTouch - startTouch;
+                Debug.DrawRay(startTouch, swipeDelta);
             }
             else if (isMouseheld && mouse)
             {
                 Debug.Log("test");
-                swipeDelta = (Vector2)Input.mousePosition - startTouch;
-                swipeDeltav3 = (Vector3)swipeDelta;
-                Debug.Log("swipeDeltav3: " + swipeDeltav3.x + swipeDeltav3.y + swipeDeltav3.z);
-                Debug.DrawRay((Vector3)startTouch, swipeDelta);;
+                ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out raycasthit, Mathf.Infinity, moveLayer))
+                {
+                    currentTouch.Set(raycasthit.point.x, 0.25f, raycasthit.point.z);
+                }
+                swipeDelta = currentTouch - startTouch;
+                Debug.Log("swipeDelta: " + swipeDelta.x + swipeDelta.y + swipeDelta.z);
+                Debug.DrawRay(startTouch, swipeDelta);;
             }
             
         }
 
         //Player movement
-        if (swipeDeltav3.magnitude > deadzone)
+        if (swipeDelta.magnitude > deadzone && canswipe)
         {
             Debug.Log("test2");
             Ray raycast;
-            raycast = new Ray(playerpos, swipeDeltav3);
+            raycast = new Ray(playerpos, swipeDelta);
             Debug.DrawRay(playerpos, swipeDelta, Color.black, 2.0f);
             RaycastHit[] Hits;
             firstCheck = true;
@@ -131,19 +152,11 @@ public class Swipe : MonoBehaviour
                             win = m_movetarget.win;
                             closestX = Hits[i].collider.transform.position.x;
                             closestZ = Hits[i].collider.transform.position.z;
-                            if (!findnewignore)
-                            {
-                                ignoreObj = Hits[i].collider.gameObject;
-                            }
-                            else
-                            {
-                                ignoreObjprev = ignoreObj;
-                                ignoreObj = Hits[i].collider.gameObject;
-                            }
                             pos.Set(Hits[i].collider.transform.position.x, 0.25f, Hits[i].collider.transform.position.z);
                             dist = Vector3.Distance(playerpos, pos);
                             firstCheck = false;
                             foundTarget = true;
+                            //ignoreObj = Hits[i].collider.gameObject;
                             Debug.Log("FoundTarget");
                         }
                         else
@@ -151,11 +164,11 @@ public class Swipe : MonoBehaviour
                             pos.Set(Hits[i].transform.position.x, 0.25f, Hits[i].transform.position.z);
                             if (Vector2.Distance(playerpos, pos) < dist)
                             {
-                                ignoreObj = Hits[i].collider.gameObject;
                                 MoveTarget m_movetarget = Hits[i].collider.GetComponent<MoveTarget>();
                                 win = m_movetarget.win;
                                 closestX = Hits[i].transform.position.x;
                                 closestZ = Hits[i].transform.position.z;
+                                //ignoreObj = Hits[i].collider.gameObject;
                             }
                         }
                     }
@@ -165,9 +178,10 @@ public class Swipe : MonoBehaviour
             {
                 movepos.Set(closestX, 0.25f, closestZ);
                 playermove.Move(movepos, win);
+                foundTarget = false;
                 Debug.Log("Go");
             }
-            Reset();
+            //Reset();
         }
 
 
@@ -175,7 +189,8 @@ public class Swipe : MonoBehaviour
     void Reset()
     {
         isDragging = false;
-        startTouch = swipeDelta = Vector2.zero;
-        swipeDeltav3 = playerpos = Vector3.zero;
+        startTouch = currentTouch;
+        swipeDelta = Vector3.zero;
+
     }
 }

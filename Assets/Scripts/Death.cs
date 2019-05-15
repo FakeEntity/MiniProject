@@ -33,6 +33,7 @@ public class Death : MonoBehaviour
     float forceup;
     Vector3 dir;
     Vector3 pos;
+    Swipe swipe;
 
     void Awake()
     {

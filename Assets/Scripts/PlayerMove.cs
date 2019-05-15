@@ -25,7 +25,8 @@ public class PlayerMove : MonoBehaviour
     bool physb;
     bool win;
     Swipe swipe;
-    public bool findnewignore = false;
+    public bool newignore = false;
+    public bool atTarget = false;
 
 
 
@@ -56,10 +57,10 @@ public class PlayerMove : MonoBehaviour
                 {
                     dir.Set(0, 0.25f, 0);
                     rb.velocity = dir * 0;
-                    move = false;
                     if (swipe != null)
                     {
-                        swipe.canswipe=true;
+                        resetswipe();
+                        move = false;
                         Debug.Log("canswipe: " + swipe.canswipe);
                     }
                     if (win == true)
@@ -110,24 +111,41 @@ public class PlayerMove : MonoBehaviour
                 rayhit = false;
                 Debug.Log("Rayhit: "+rayhit);
                 win = Win;
-                if (findnewignore)
-                {
-                    MoveTarget ignorePrev = swipe.ignoreObjprev.GetComponent<MoveTarget>();
-                    ignorePrev.ignore = false;
-                }
-                MoveTarget ignore = swipe.ignoreObj.GetComponent<MoveTarget>();
-                ignore.ignore=true;
-                findnewignore = true;
-                swipe.findnewignore = true;
-                move = true;
                 if (swipe != null)
                 {
-                    swipe.canswipe=false;
+                    swipe.canswipe = false;
                 }
+                //if (!newignore)
+                //{
+                //    MoveTarget ignoreprev = swipe.ignoreObjprev.GetComponent<MoveTarget>();
+                //    ignoreprev.ignore = true;
+                //}
+
+                //swipe.ignoreObjprev = swipe.ignoreObj;
+                //MoveTarget ignore = swipe.ignoreObj.GetComponent<MoveTarget>();
+                //ignore.ignore = false;
+                //atTarget = true;
+                swipe.ignoreObjprev = swipe.ignoreObj;
+                swipe.firstCheck = true;
+                //newignore = true;
+                move = true;
+
             }
         }  
      }
 
+    void resetswipe()
+    {
+        float timer = 3.0f;
+        while (timer > 0.0f)
+            timer -= Time.deltaTime;
+        if (timer <= 0.0f)
+        {
+            swipe.startTouch = swipe.currentTouch;
+            swipe.swipeDelta = Vector3.zero;
+            swipe.canswipe = true;
+        }
+    }
 
 
 
