@@ -10,6 +10,7 @@ public class ManagerScript : MonoBehaviour
     [HideInInspector] public bool win = false;
     public int currentScene = 0;
     public bool mouse = true;
+    public int score;
     bool keypressR;
     bool keypressEsc;
 
@@ -25,6 +26,10 @@ public class ManagerScript : MonoBehaviour
             Destroy(gameObject);
         }
 
+    }
+    private void Start()
+    {
+        Application.targetFrameRate = 120;
     }
     void Update()
     {

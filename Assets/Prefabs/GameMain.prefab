@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8910481974355271170
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8910481974355271168}
+  - component: {fileID: 8910481974355271169}
+  - component: {fileID: 8910481974355271198}
+  m_Layer: 0
+  m_Name: GameMain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8910481974355271168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910481974355271170}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 291.1352, y: 131.08884, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8910481974355271169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910481974355271170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a372a281aff43f4ab9cf34c5d1dea87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skipFadeOut: 0
+  fadeOutDuration: 1.5
+  waitBeforeEnd: 0.3
+  fadeInDuration: 1.5
+  Imager: {fileID: 0}
+  player: {fileID: 0}
+  NextScene: 0
+  win: 0
+  score: 0
+  maxscore: 0
+  scoreObj: []
+--- !u!114 &8910481974355271198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910481974355271170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab05455eb3dc2c74bbb45e13df1f1eca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  moveLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  deadzone: 3
+  startTouch: {x: 0, y: 0, z: 0}
+  swipeDelta: {x: 0, y: 0, z: 0}
+  currentTouch: {x: 0, y: 0, z: 0}
+  win: 0
+  firstCheck: 0
+  MoveTargetTag: MoveTarget
+  ignoreObj: {fileID: 0}
+  ignoreObjprev: {fileID: 0}
+  playerpos: {x: 0, y: 0, z: 0}
+  canswipe: 1

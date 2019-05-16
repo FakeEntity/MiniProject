@@ -7,6 +7,7 @@ TagManager:
   - Walls
   - Enemy
   - MoveTarget
+  - Score
   layers:
   - Default
   - TransparentFX

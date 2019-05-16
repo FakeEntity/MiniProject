@@ -99,9 +99,6 @@ public class Touches : MonoBehaviour
                 {
                     if (Hits[i].collider.transform.tag == MoveTargetTag)
                     {
-                        MoveTarget mov = Hits[i].collider.GetComponent<MoveTarget>();
-                        if (!mov.ignore)
-                        {
                             if (firstCheck)
                             {
                                 MoveTarget m_movetarget = Hits[i].collider.GetComponent<MoveTarget>();
@@ -135,7 +132,7 @@ public class Touches : MonoBehaviour
                                     closestZ = Hits[i].transform.position.z;
                                 }
                             }
-                        }
+                        
 
                     }
                 }

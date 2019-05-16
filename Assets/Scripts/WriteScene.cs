@@ -16,10 +16,4 @@ public class WriteScene : MonoBehaviour
         Scene scene = SceneManager.GetActiveScene();
         texty.text =scene.name;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

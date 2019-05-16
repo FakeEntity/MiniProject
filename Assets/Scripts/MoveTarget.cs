@@ -6,15 +6,21 @@ public class MoveTarget : MonoBehaviour
 {
     PlayerMove m_playermove;
     public GameObject player;
-    public bool win=false;
-    public bool ignore = false;
+    public bool finish = false;
+    [HideInInspector] public bool win = false;
+    public Sprite winsprite;
     Vector3 pos;
     BoxCollider boxcol;
+    public GameObject gameMain;
+    GameScript gameScript;
+    SpriteRenderer spriteRender;
 
     void Awake()
     {
+        gameScript = gameMain.GetComponent<GameScript>();
         boxcol = GetComponent<BoxCollider>();
         m_playermove = player.GetComponent<PlayerMove>();
+        spriteRender = GetComponent<SpriteRenderer>();
 
     }
     private void Start()
@@ -23,13 +29,15 @@ public class MoveTarget : MonoBehaviour
     }
     private void Update()
     {
-        if (ignore)
+        if (finish)
         {
-            boxcol.enabled = false;
-        }
-        else
-        {
-            boxcol.enabled=true;
+            Debug.Log("gScore: " + gameScript.score);
+            Debug.Log("gmaxScore: " + gameScript.maxscore);
+            if (gameScript.score >= gameScript.maxscore)
+            {
+                win=true;
+                spriteRender.sprite=winsprite;
+            }
         }
     }
 

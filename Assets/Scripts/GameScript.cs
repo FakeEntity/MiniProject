@@ -16,6 +16,9 @@ public class GameScript : MonoBehaviour
     bool state = false;
     public bool win = false;
     int currentScene;
+    public int score = 0;
+    public int maxscore = 0;
+    public GameObject[] scoreObj;
 
 
 
@@ -31,6 +34,10 @@ public class GameScript : MonoBehaviour
     private void Start()
     {
         currentScene = ManagerScript.Instance.currentScene;
+        ManagerScript.Instance.score = score;
+        scoreObj = GameObject.FindGameObjectsWithTag("Score");
+        maxscore = scoreObj.Length;
+        Debug.Log("Maxscore: " + maxscore);
     }
 
     public void FadeOut(CanvasGroup image,float duration)
@@ -62,6 +69,7 @@ public class GameScript : MonoBehaviour
     }
         void Update()
         {
+        score = ManagerScript.Instance.score;
         win = ManagerScript.Instance.win;
         if (!state)
             FadeOut(Imager, fadeOutDuration);

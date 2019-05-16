@@ -25,8 +25,8 @@ public class PlayerMove : MonoBehaviour
     bool physb;
     bool win;
     Swipe swipe;
-    public bool newignore = false;
-    public bool atTarget = false;
+    //public bool newignore = false;
+    //public bool atTarget = false;
 
 
 
@@ -146,7 +146,16 @@ public class PlayerMove : MonoBehaviour
             swipe.canswipe = true;
         }
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Score"))
+        {
+            other.gameObject.SetActive(false);
+            ManagerScript.Instance.score += 1;
+            Debug.Log("Score: " + ManagerScript.Instance.score);
+            Destroy(other.gameObject);
+        }
+    }
 
 
 }

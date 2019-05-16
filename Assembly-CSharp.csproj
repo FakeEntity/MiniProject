@@ -70,10 +70,12 @@
     <Compile Include="Assets\Scripts\NpcMove.cs" />
     <Compile Include="Assets\Scripts\PlayerMove.cs" />
     <Compile Include="Assets\Scripts\Rotate.cs" />
+    <Compile Include="Assets\Scripts\Rotating.cs" />
     <Compile Include="Assets\Scripts\Swipe.cs" />
     <Compile Include="Assets\Scripts\Test\Touches.cs" />
     <Compile Include="Assets\Scripts\Unselect.cs" />
     <Compile Include="Assets\Scripts\WriteScene.cs" />
+    <Compile Include="Assets\Scripts\WriteScore.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />

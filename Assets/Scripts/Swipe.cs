@@ -143,9 +143,6 @@ public class Swipe : MonoBehaviour
             {
                 if (Hits[i].collider.transform.tag == MoveTargetTag)
                 {
-                    MoveTarget mov = Hits[i].collider.GetComponent<MoveTarget>();
-                    if (!mov.ignore)
-                    {
                         if (firstCheck)
                         {
                             MoveTarget m_movetarget = Hits[i].collider.GetComponent<MoveTarget>();
@@ -161,17 +158,17 @@ public class Swipe : MonoBehaviour
                         }
                         else
                         {
-                            pos.Set(Hits[i].transform.position.x, 0.25f, Hits[i].transform.position.z);
-                            if (Vector2.Distance(playerpos, pos) < dist)
+                            pos.Set(Hits[i].collider.transform.position.x, 0.25f, Hits[i].collider.transform.position.z);
+                            if (Vector3.Distance(playerpos, pos) < dist)
                             {
                                 MoveTarget m_movetarget = Hits[i].collider.GetComponent<MoveTarget>();
                                 win = m_movetarget.win;
-                                closestX = Hits[i].transform.position.x;
-                                closestZ = Hits[i].transform.position.z;
+                                closestX = Hits[i].collider.transform.position.x;
+                                closestZ = Hits[i].collider.transform.position.z;
                                 //ignoreObj = Hits[i].collider.gameObject;
                             }
                         }
-                    }
+                    
                 }
             }
             if (foundTarget)

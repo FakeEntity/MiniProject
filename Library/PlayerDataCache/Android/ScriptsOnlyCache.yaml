@@ -7,9 +7,11 @@ ScriptsOnlyBuild:
     - MoveTarget
     - NpcMove
     - PlayerMove
+    - Rotating
     - Swipe
     - Unselect
     - WriteScene
+    - WriteScore
     Unity.TextMeshPro.dll:
     - TMPro.TMP_FontAsset
     - TMPro.TMP_Settings
@@ -104,6 +106,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10606}
     - Class: 114
       Script: {instanceID: 10618}
+    - Class: 114
+      Script: {instanceID: 12826}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -189,6 +193,95 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10606}
     - Class: 114
       Script: {instanceID: 10618}
+    - Class: 114
+      Script: {instanceID: 12826}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 212
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
+      Script: {instanceID: 0}
+    Assets/Scenes/Level 3.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 54
+      Script: {instanceID: 0}
+    - Class: 64
+      Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9320}
+    - Class: 114
+      Script: {instanceID: 9386}
+    - Class: 114
+      Script: {instanceID: 9388}
+    - Class: 114
+      Script: {instanceID: 9394}
+    - Class: 114
+      Script: {instanceID: 9400}
+    - Class: 114
+      Script: {instanceID: 9408}
+    - Class: 114
+      Script: {instanceID: 9444}
+    - Class: 114
+      Script: {instanceID: 9452}
+    - Class: 114
+      Script: {instanceID: 9802}
+    - Class: 114
+      Script: {instanceID: 9976}
+    - Class: 114
+      Script: {instanceID: 9984}
+    - Class: 114
+      Script: {instanceID: 10048}
+    - Class: 114
+      Script: {instanceID: 10134}
+    - Class: 114
+      Script: {instanceID: 10278}
+    - Class: 114
+      Script: {instanceID: 10584}
+    - Class: 114
+      Script: {instanceID: 10606}
+    - Class: 114
+      Script: {instanceID: 10618}
+    - Class: 114
+      Script: {instanceID: 12826}
+    - Class: 114
+      Script: {instanceID: 33350}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -690,7 +783,7 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAsset
   - hash:
       serializedVersion: 2
-      Hash: 9ab7f817de3135d14dccab973b721a43
+      Hash: 3bb190862a05259747fc5c13d7947338
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: MoveTarget
@@ -738,13 +831,13 @@ ScriptsOnlyBuild:
     className: TMP_SpriteAnimator
   - hash:
       serializedVersion: 2
-      Hash: f5671ef7ea691da2de2bbbe2ad74063c
+      Hash: a02695a6a48c5a7be28753ac71ccd70c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerMove
   - hash:
       serializedVersion: 2
-      Hash: 4dc82fe174d3072e10db31b6de1a8fcf
+      Hash: b246a0665062ff9d32693624b2e40898
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameScript
@@ -888,7 +981,7 @@ ScriptsOnlyBuild:
     className: TMP_ColorGradient
   - hash:
       serializedVersion: 2
-      Hash: 1a740b75688b8189287bf5d6730a8997
+      Hash: 21657963d1cf6bb7708cceb6ebc2b46c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: ManagerScript
@@ -916,8 +1009,21 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 46a60f864082a27ea063d7a374ae4193
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: WriteScore
+  - hash:
+      serializedVersion: 2
+      Hash: bfb7acf23acfa7246645fd27e5c50ca3
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Rotating
   platform: 13
   scenePathNames:
   - Assets/Scenes/Level 1.unity
   - Assets/Scenes/Level 2.unity
-  playerPath: C:/Users/Entity/Desktop/MiniProjectv0568.apk
+  - Assets/Scenes/Level 3.unity
+  playerPath: C:/Users/Entity/Desktop/MiniProjectv057.apk
